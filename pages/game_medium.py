@@ -5,7 +5,7 @@ import requests #for requesting API Merriem Webster (used to display word meanin
 from pygame import mixer #for generating audio output
 from wonderwords import RandomWord #to randomly generate English words for the guessing game
 
-class game_easy(Frame):
+class game_medium(Frame):
     def __init__(self, master, controller):
         Frame.__init__(self, master)
         self.controller = controller
@@ -35,20 +35,6 @@ class game_easy(Frame):
         self.my_word_string = ''.join(self.my_word) #turns list into string
         self.labels = [] #sets labels to empty list
         self.empty_boxes() #initialize the empty_boxes function
-
-        #sets the label for the clue in the easy difficulty (word meaning)
-        self.meaning_label = Label(self, text='', wraplength=525, width=75, borderwidth=0, font=(None, 12),justify=LEFT)
-        self.meaning_label.place(x=650, y=225)
-
-        #sets the api
-        self.api_key = "0484927a-0039-4785-b2a3-5d29170f686b"
-        self.base_url = "https://dictionaryapi.com/api/v3/references/collegiate/json"
-        self.url = f'{self.base_url}/{self.my_word_string}'
-        self.params = {'key': self.api_key}
-        self.response = requests.get(self.url, params=self.params)
-        self.data = self.response.json()
-
-        self.get_word_details() #initialize the get_word_details that uses the API
 
     '''empty_boxes displays the initial blank boxes and lines. 
     The for loop defines the blank boxes and lines' length based on the length of the randomly generated word'''
@@ -98,26 +84,6 @@ class game_easy(Frame):
             mixer.music.load('audio/laughing_dog.mp3') #loads an mp3 file
             mixer.music.play() #starts the mp3 file
 
-    '''get_word_details parses the data from the json file in the API and 
-    specifically takes the meaning of a word to display'''
-    def get_word_details(self):
-        if isinstance(self.data, list): #checks if the data inputted is a lit
-            if self.data: #check if the data is not None
-                first_item = self.data[0] #access the 0th index of the data
-
-                word_meta = first_item.get("meta", {}) #pulls the meta or the word
-                word_fl = first_item.get("fl", "") #pulls the part of speech
-                word_def = first_item.get("shortdef", []) # pulls the definition
-
-                #make a dictionary containing the 3 parsed content
-                self.current_word = {
-                    'word': word_meta.get('id', '')[:-2],
-                    'part of speech': {word_fl},
-                    'meaning': '; '.join(word_def)
-                }
-
-                word_details = self.current_word['meaning'] #store the value of meaning in a variable word_details
-                self.meaning_label.config(text=word_details) #updates the self.meaning_label empty label into the stored meaning
 
     '''button_check_command is a callback funtion when player presses 'check'.
     it compares the inputted letter with the randomly generated words to see if there's a match.
