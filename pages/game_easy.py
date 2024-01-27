@@ -41,7 +41,7 @@ class game_easy(Frame):
         self.meaning_label.place(x=650, y=225)
 
         #sets the api
-        self.api_key = "0484927a-0039-4785-b2a3-5d29170f686b"
+        self.api_key = "Your_API_Key"
         self.base_url = "https://dictionaryapi.com/api/v3/references/collegiate/json"
         self.url = f'{self.base_url}/{self.my_word_string}'
         self.params = {'key': self.api_key}
@@ -101,7 +101,7 @@ class game_easy(Frame):
     '''get_word_details parses the data from the json file in the API and 
     specifically takes the meaning of a word to display'''
     def get_word_details(self):
-        if isinstance(self.data, list): #checks if the data inputted is a lit
+        if isinstance(self.data, list): #checks if the data inputted is a list
             if self.data: #check if the data is not None
                 first_item = self.data[0] #access the 0th index of the data
 

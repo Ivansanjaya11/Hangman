@@ -1,9 +1,8 @@
 import tkinter as tk #for GUI
 from tkinter import *
-from tkinter import Frame
 from pygame import mixer #for generating audio output
 from wonderwords import RandomWord #to randomly generate English words for the guessing game
-from tkinter import *
+
 
 class game_hard(Frame):
     def __init__(self, master, controller):
